@@ -1,5 +1,5 @@
-(set-env! :dependencies '[[tesser.core "1.0.2"]
-                          [net.mikera/core.matrix "0.61.0"]])
+; (set-env! :dependencies '[[tesser.core "1.0.2"]
+;                           [net.mikera/core.matrix "0.61.0"]])
 
 (require '[tesser.core :as t])
 (require '[clojure.core.matrix :as m])
