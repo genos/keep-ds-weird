@@ -2,10 +2,10 @@ with import <nixpkgs> {};
 stdenv.mkDerivation {
   name = "diaconis.clj";
   src = ./.;
-  buildInputs = [ clojure ];
+  buildInputs = [ boot ];
   shellHook = ''
-    it() {
-      clojure ${./diaconis.clj}
+    it () {
+      boot -q -f ${./diaconis.clj}
     }
   '';
 }
