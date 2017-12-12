@@ -1,5 +1,3 @@
-#!/usr/bin/env boot
-
 (set-env! :dependencies '[[tesser.core "1.0.2"]
                           [net.mikera/core.matrix "0.61.0"]])
 
