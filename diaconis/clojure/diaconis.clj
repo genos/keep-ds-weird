@@ -13,7 +13,7 @@
           (t/reduce m/add zero)
           (t/tesser [vecs]))
    matrices-equal (if (= a b) "Yes" "No")]
-  (println (str "\n\nAre a and b equal? " matrices-equal "\n"))
+  (println (str "Are a and b equal? " matrices-equal "\n"))
   (m/pm a))
 
 (System/exit 0)
