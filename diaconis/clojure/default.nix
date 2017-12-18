@@ -12,9 +12,7 @@ let
       buildInputs = [ leiningen ];
       buildPhase = ''
         # https://blog.jeaye.com/2017/07/30/nixos-revisited/
-        # For leiningen
-        export HOME=$PWD
-        export LEIN_HOME=$HOME/.lein
+        export LEIN_HOME=$PWD/.lein
         mkdir -p $LEIN_HOME
         echo "{:user {:local-repo \"$LEIN_HOME\"}}" > $LEIN_HOME/profiles.clj
         cd ${cd}
@@ -40,14 +38,6 @@ let
     sha256 = "1dywj2av5rwnv7qhh09lpx9c2kx7wvgllwyssvyr75cb6fa6smvg";
     cd = ".";
     };
-  sampling = buildLeinFromGitHub {
-    name = "sampling";
-    owner = "bigmlcom";
-    repo = "sampling";
-    rev = "ef426437ec6c7ba81347110b305f721ca0c7f5e5";
-    sha256 = "1dywj2av5rwnv7qhh09lpx9c2kx7wvgllwyssvyr75cb6fa6smvg";
-    cd = ".";
-  };
 in
   stdenv.mkDerivation {
     name = "diaconis.clj";
@@ -55,7 +45,7 @@ in
     buildInputs = [ clojure jdk ];
     shellHook = ''
       it () {
-        ${jdk}/bin/java -cp ${tesser}:${matrix}:${sampling}:${clojure}/share/java/clojure.jar clojure.main ${./diaconis.clj}
+        ${jdk}/bin/java -cp ${tesser}:${matrix}:${clojure}/share/java/clojure.jar clojure.main ${./diaconis.clj}
       }
     '';
   }

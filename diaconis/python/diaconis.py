@@ -21,8 +21,11 @@ def fourier_transform_2(ps):
 
 
 if __name__ == '__main__':
-    N = 10
-    S_N = np.array(list(permutations(range(N))))
-    ps = S_N[np.random.randint(factorial(N), size=10000)]
+    np.random.seed(1729)
+    k = 5
+    n = 500
+    ps = np.repeat([np.arange(k)], n, axis=0)
+    for p in ps:
+        np.random.shuffle(p)
     fhat = fourier_transform(ps)
     print("Permutations:\n{0}\n\nFourier Transform:\n{1}".format(ps, fhat))

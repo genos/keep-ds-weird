@@ -1,6 +1,5 @@
 (require '[tesser.core :as t])
 (require '[clojure.core.matrix :as m])
-(require '[bigmlcom.sampling.stream :as s])
 
 (let
   [k 5
@@ -16,7 +15,5 @@
    matrices-equal (if (= a b) "Yes" "No")]
   (println (str "Are a and b equal? " matrices-equal "\n"))
   (m/pm a))
-
-
 
 (System/exit 0)
