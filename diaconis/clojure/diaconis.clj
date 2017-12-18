@@ -14,6 +14,6 @@
           (t/tesser [ps]))
    matrices-equal (if (= a b) "Yes" "No")]
   (println (str "Are a and b equal? " matrices-equal "\n"))
-  (m/pm a {:formatter (comp str int)} ))
+  (m/pm a {:formatter (comp str int)}))
 
 (System/exit 0)
