@@ -1,6 +1,6 @@
 with import <nixpkgs> {};
 let
-  buildLeinFromGitHub = { name, owner, repo, rev, sha256, cd}:
+  buildLeinFromGitHub = { name, owner, repo, rev, sha256, cd }:
   stdenv.mkDerivation {
     name = name;
     src = fetchFromGitHub {
