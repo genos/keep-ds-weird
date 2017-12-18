@@ -1,9 +1,10 @@
 (require '[tesser.core :as t])
 (require '[clojure.core.matrix :as m])
+(require '[bigmlcom.sampling.stream :as s])
 
 (let
-  [k 10
-   n 10000
+  [k 5
+   n 500
    zero (m/zero-matrix k k)
    vecs (for [_ (range n)] (shuffle (range k)))
    a (->> vecs
@@ -15,5 +16,7 @@
    matrices-equal (if (= a b) "Yes" "No")]
   (println (str "Are a and b equal? " matrices-equal "\n"))
   (m/pm a))
+
+
 
 (System/exit 0)
