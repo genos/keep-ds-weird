@@ -2,8 +2,6 @@
 # coding: utf-8
 
 from collections import Counter
-from itertools import permutations
-from math import factorial
 import numpy as np
 
 
