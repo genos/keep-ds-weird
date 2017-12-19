@@ -11,9 +11,7 @@
           (reduce m/add zero))
    b (->> (t/map m/permutation-matrix)
           (t/reduce m/add zero)
-          (t/tesser [ps]))
-   matrices-equal (if (= a b) "Yes" "No")]
-  (println (str "Are a and b equal? " matrices-equal "\n"))
-  (m/pm a {:formatter (comp str int)}))
+          (t/tesser [ps]))]
+  (println (str "Are a and b equal? " (if (m/e== a b) "Yes" "No"))))
 
 (System/exit 0)
