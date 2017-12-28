@@ -2,56 +2,53 @@
 # coding: utf-8
 
 import numpy as np
-from sklearn.neighbors import NearestNeighbors
 import timeit
 
 
 def naive(X):
     result = []
     for (i, x) in enumerate(X):
-        min_j = -1
-        min_d = np.inf
+        min_j, min_d = -1, np.inf
         for (j, y) in enumerate(X):
-            d = 0
-            for k in range(len(x)):
-                d += (y[k] - x[k])**2
-            if i != j and d < min_d:
-                min_j, min_d = j, d
+            if i != j:
+                d = sum((y[k] - x[k])**2 for k in range(len(x)))
+                if d < min_d:
+                    min_j, min_d = j, d
         result.append(min_j)
-    return np.array(result)
+    return result
 
 
 def no_loops(X):
     # https://speakerdeck.com/jakevdp/losing-your-loops-fast-numerical-computing-with-numpy-pycon-2015
     m, n = X.shape
-    diff = X.reshape(m, 1, n) - X
-    D = (diff**2).sum(axis=2)
+    d = X.reshape(m, 1, n) - X
+    D = (d**2).sum(axis=2)
     i = np.arange(m)
     D[i, i] = np.inf
     result = np.argmin(D, axis=1)
     return result
 
 
-def reference(X):
-    _, ns = NearestNeighbors(n_neighbors=2, n_jobs=-1).fit(X).kneighbors(X)
-    return ns[:, 1]
-
-
 def check_equality(X):
     naive_answer = naive(X)
     no_loops_answer = no_loops(X)
-    reference_answer = reference(X)
-    print(np.all(naive_answer == reference_answer))
-    print(np.all(no_loops_answer == reference_answer))
+    print("Does the no loops answer match the naive answer?\n\t{}.".format(
+        "Yes" if np.all(no_loops_answer == naive_answer) else "No"))
 
 
-def timings(X):
-    print(timeit.timeit('naive(X)', globals=globals()))
-    print(timeit.timeit('no_loops(X)', globals=globals()))
+def timings(X, repeat=3, number=100):
+    naive_timing = timeit.repeat(
+        'naive(X)', repeat=repeat, number=number, globals=globals())
+    no_loops_timing = timeit.repeat(
+        'no_loops(X)', repeat=repeat, number=number, globals=globals())
+    print("Naive timing:\n\t{}".format(naive_timing))
+    print("No loops timing:\n\t{}".format(no_loops_timing))
+    print("min(naive) / max(no_loops_timing):\n\t{}".format(
+        np.min(naive_timing) / np.max(no_loops_timing)))
 
 
 if __name__ == '__main__':
     np.random.seed(1729)
-    X = np.random.random((5, 3))
+    X = np.random.random((100, 3))
     check_equality(X)
     timings(X)
