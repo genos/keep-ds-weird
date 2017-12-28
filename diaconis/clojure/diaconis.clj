@@ -12,6 +12,6 @@
    b (->> (t/map m/permutation-matrix)
           (t/reduce m/add zero)
           (t/tesser [ps]))]
-  (println (str "Are a and b equal? " (if (m/e== a b) "Yes" "No"))))
+  (println (str "Are a and b equal?\n\t" (if (m/e== a b) "Yes" "No"))))
 
 (System/exit 0)
