@@ -1,8 +1,8 @@
 with import <nixpkgs> {};
 stdenv.mkDerivation rec {
-  name = "diaconis.py";
+  name = "nearest_neighbors.py";
   src = ./.;
-  buildInputs = [ python36 python36Packages.numpy ];
+  buildInputs = [ python36 python36Packages.numpy  python36Packages.scikitlearn ];
   shellHook = ''
     it () {
       python3 ${name}
