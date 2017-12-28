@@ -39,13 +39,13 @@ let
     cd = ".";
     };
 in
-  stdenv.mkDerivation {
+  stdenv.mkDerivation rec {
     name = "diaconis.clj";
     src = ./.;
     buildInputs = [ clojure jdk ];
     shellHook = ''
       it () {
-        ${jdk}/bin/java -cp ${tesser}:${matrix}:${clojure}/share/java/clojure.jar clojure.main ${./diaconis.clj}
+        ${jdk}/bin/java -cp ${tesser}:${matrix}:${clojure}/share/java/clojure.jar clojure.main ${name}
       }
     '';
   }
