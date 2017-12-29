@@ -26,4 +26,4 @@ if __name__ == '__main__':
     for p in ps:
         np.random.shuffle(p)
     fhat = fourier_transform(ps)
-    print("Permutations:\n\t{0}\n\nFourier Transform:\n\t{1}".format(ps, fhat))
+    print("Permutations:\n{0}\n\nFourier Transform:\n{1}".format(ps, fhat))
