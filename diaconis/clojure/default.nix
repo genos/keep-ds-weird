@@ -41,7 +41,6 @@ let
 in
   stdenv.mkDerivation rec {
     name = "diaconis.clj";
-    src = ./.;
     buildInputs = [ clojure jdk ];
     shellHook = ''
       it () {
