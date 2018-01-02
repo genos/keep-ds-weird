@@ -20,9 +20,9 @@ class Datum:
         'date',
         'time',
         'temperature',
+        'humidity',
         'wind_direction',
         'wind_speed',
-        'humidity'
     ]
 
     def __init__(self, date):
@@ -35,11 +35,12 @@ class Datum:
                 minute=random.randrange(0, 60),
                 second=random.randrange(0, 60))
         self.temperature = random.normalvariate(75, 10)
-        self.wind_direction = random.choice(WIND_DIRECTIONS)
+        self.humidity = random.random()
+        self.wind_direction = None
         self.wind_speed = None
         if random.choice([True, False]):
+            self.wind_direction = random.choice(WIND_DIRECTIONS)
             self.wind_speed = random.randrange(15)
-        self.humidity = random.random()
 
     def __str__(self):
         return ''.join([
@@ -51,11 +52,14 @@ class Datum:
             random.choice(SPACES),
             "{:2.1f}".format(self.temperature),
             random.choice(SPACES),
-            self.wind_direction,
-            random.choice(SPACES),
-            '' if self.wind_speed is None else "{:d}".format(self.wind_speed),
-            random.choice(SPACES),
-            "{:.0%}".format(self.humidity)
+            "{:.0%}".format(self.humidity),
+            '' if self.wind_direction is None or self.wind_speed is None
+               else ''.join([
+                   random.choice(SPACES),
+                   self.wind_direction,
+                   random.choice(SPACES),
+                   "{:d}".format(self.wind_speed)
+               ])
         ])
 
 
