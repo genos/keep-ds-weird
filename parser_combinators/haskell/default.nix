@@ -1,10 +1,10 @@
 with import <nixpkgs> {};
 stdenv.mkDerivation rec {
-  name = "generate_data.py";
-  buildInputs = [ python36 ];
+  name = "ParseLog.hs";
+  buildInputs = [ haskell.compiler.ghc822 ];
   shellHook = ''
     it () {
-      python3 ${name} > input.log
+      runhaskell ${name}
     }
   '';
 }
