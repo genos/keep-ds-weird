@@ -32,7 +32,7 @@ def no_loops(X):
 def check_equality(X):
     naive_answer = naive(X)
     no_loops_answer = no_loops(X)
-    print("Does the no loops answer match the naive answer?\n\t{}.".format(
+    print("Does the no loops answer match the naive answer?\n\t{}".format(
         "Yes" if np.all(no_loops_answer == naive_answer) else "No"))
 
 
