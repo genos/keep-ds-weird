@@ -7,7 +7,8 @@ import random as r
 
 
 def space():
-    return r.choice([' ', '\t', ' \t', '\t ', '\t\t', '   '])
+    """A random amount of whitespace (tabs and spaces)"""
+    return ''.join([r.choice(' \t') for _ in range(r.randrange(1, 4))])
 
 
 def entry(date):
@@ -31,7 +32,7 @@ def entry(date):
         space(), "{:2.1f}".format(temperature),
         space(), "{:.0%}".format(humidity),
         '' if direction is None or speed is None
-           else ''.join([space(), direction, space(), "{:d}".format(speed)])
+        else ''.join([space(), direction, space(), "{:d}".format(speed)])
     ])
 
 

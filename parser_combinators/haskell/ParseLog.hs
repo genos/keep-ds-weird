@@ -118,11 +118,11 @@ direction = choice
 
 speed :: ReadP MilesPerHour
 speed = do
-  s <- choice [digits 2, digits 1]
+  s <- digits 2 <++ digits 1
   return (MilesPerHour s)
 
 speed' :: ReadP MilesPerHour
-speed' = MilesPerHour <$> choice [digits 2, digits 1]
+speed' = MilesPerHour <$> (digits 2 <++ digits 1)
 
 wind :: ReadP Wind
 wind = do
@@ -131,7 +131,7 @@ wind = do
   return Wind {..}
 
 wind' :: ReadP Wind
-wind' = Wind <$> direction <*> (skipSpaces *> speed)
+wind' = Wind <$> direction <*> (skipSpaces *> speed')
 
 -- parse a full entry
 
