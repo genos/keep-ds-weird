@@ -1,6 +1,6 @@
 with import <nixpkgs> {};
 stdenv.mkDerivation rec {
-  name = "diaconis.py";
+  name = "fourier_transform.py";
   buildInputs = [ python36 python36Packages.numpy ];
   shellHook = ''
     it () {

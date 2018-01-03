@@ -40,7 +40,7 @@ let
     };
 in
   stdenv.mkDerivation rec {
-    name = "diaconis.clj";
+    name = "fourier_transform.clj";
     buildInputs = [ clojure jdk ];
     shellHook = ''
       it () {
