@@ -67,8 +67,7 @@ number = read <$> many (satisfy isDigit)
 -- parse pieces
 
 sensorID :: ReadP SensorID
-sensorID =
-  choice [char 'A' >> pure A, char 'B' >> pure B, char 'C' >> pure C]
+sensorID = choice [char 'A' >> pure A, char 'B' >> pure B, char 'C' >> pure C]
 
 date :: ReadP Date
 date = do
@@ -151,5 +150,4 @@ entry = do
 main :: IO ()
 main = do
   rawData <- readFile "../data.log"
-  forM_ (lines rawData) $ \line ->
-    print (head (fst <$> readP_to_S entry line))
+  forM_ (lines rawData) $ \line -> print (head (fst <$> readP_to_S entry line))
