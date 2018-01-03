@@ -42,10 +42,10 @@ instance Show Percentage where
   show (Percentage p) = p' ++ "%" where
     p' = takeWhile (/= '.') (show p)
 
-data Wind = Wind { _direction :: Direction, _mph :: MilesPerHour }
+data Wind = Wind { _direction :: Direction, _speed :: MilesPerHour }
 
 instance Show Wind where
-  show (Wind d m) = show d ++ "@" ++ show m
+  show (Wind d s) = show d ++ "@" ++ show s
 
 data Direction = N | S | E | W deriving Show
 
@@ -66,12 +66,11 @@ number = read <$> many (satisfy isDigit)
 
 -- parse pieces
 
-parseSensorID :: ReadP SensorID
-parseSensorID =
-  choice [char 'A' >> pure A, char 'B' >> pure B, char 'C' >> pure C]
+sensorID :: ReadP SensorID
+sensorID = choice [char 'A' >> pure A, char 'B' >> pure B, char 'C' >> pure C]
 
-parseDate :: ReadP Date
-parseDate = do
+date :: ReadP Date
+date = do
   _year  <- digits 4
   _      <- char '-'
   _month <- digits 2
@@ -79,68 +78,71 @@ parseDate = do
   _day   <- digits 2
   return Date {..}
 
-parseDate' :: ReadP Date
-parseDate' = do
+date' :: ReadP Date
+date' = do
   _year  <- digits 4
   _month <- char '-' *> digits 2
   _day   <- char '-' *> digits 2
   return Date {..}
 
-parseDate'' :: ReadP Date
-parseDate'' =
+date'' :: ReadP Date
+date'' =
   Date <$> digits 4 <*> (char '-' *> digits 2) <*> (char '-' *> digits 2)
 
-parseTime :: ReadP Time
-parseTime = do
+time :: ReadP Time
+time = do
   _hour   <- digits 2
   _minute <- char ':' *> digits 2
   _second <- char ':' *> digits 2
   return Time {..}
 
-parseFahrenheit :: ReadP Fahrenheit
-parseFahrenheit = do
+fahrenheit :: ReadP Fahrenheit
+fahrenheit = do
   x <- number
   y <- char '.' *> number
   let f = x + y / 10
   return (Fahrenheit f)
 
-parsePercentage :: ReadP Percentage
-parsePercentage = do
+humidity :: ReadP Percentage
+humidity = do
   p <- number <* char '%'
   return (Percentage p)
 
-parseDirection :: ReadP Direction
-parseDirection = choice
+direction :: ReadP Direction
+direction = choice
   [ char 'N' >> pure N
   , char 'S' >> pure S
   , char 'E' >> pure E
   , char 'W' >> pure W
   ]
 
-parseMPH :: ReadP MilesPerHour
-parseMPH = do
-  mph <- choice [digits 2, digits 1]
-  return (MilesPerHour mph)
+speed :: ReadP MilesPerHour
+speed = do
+  s <- choice [digits 2, digits 1]
+  return (MilesPerHour s)
 
-parseWind :: ReadP Wind
-parseWind = do
-  _direction <- parseDirection
-  _mph <- skipSpaces *> parseMPH
+speed' :: ReadP MilesPerHour
+speed' = MilesPerHour <$> choice [digits 2, digits 1]
+
+wind :: ReadP Wind
+wind = do
+  _direction <- direction
+  _speed     <- skipSpaces *> speed
   return Wind {..}
 
-parseWind' :: ReadP (Direction, MilesPerHour)
-parseWind' = (,) <$> parseDirection <*> (skipSpaces *> parseMPH)
+wind' :: ReadP Wind
+wind' = Wind <$> direction <*> (skipSpaces *> speed)
 
 -- parse a full entry
 
-parseEntry :: ReadP Entry
-parseEntry = do
-  _sensorID <- parseSensorID
-  _date     <- skipSpaces *> parseDate
-  _time     <- skipSpaces *> (Just <$> parseTime) <++ pure Nothing
-  _temp     <- skipSpaces *> parseFahrenheit
-  _humidity <- skipSpaces *> parsePercentage
-  _wind     <- skipSpaces *> (Just <$> parseWind) <++ pure Nothing
+entry :: ReadP Entry
+entry = do
+  _sensorID <- sensorID
+  _date     <- skipSpaces *> date
+  _time     <- skipSpaces *> (Just <$> time) <++ pure Nothing
+  _temp     <- skipSpaces *> fahrenheit
+  _humidity <- skipSpaces *> humidity
+  _wind     <- skipSpaces *> (Just <$> wind) <++ pure Nothing
   return Entry {..}
 
 {- main event -}
@@ -148,6 +150,4 @@ parseEntry = do
 main :: IO ()
 main = do
   rawData <- readFile "../data.log"
-  forM_ (lines rawData) $ \line -> do
-    let entry = head (fst <$> readP_to_S parseEntry line)
-    print entry
+  forM_ (lines rawData) $ \line -> print (head (fst <$> readP_to_S entry line))
