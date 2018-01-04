@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ R rPackages.Ramble ];
   shellHook = ''
     it () {
-      Rscript ${name}
+      ${R}/bin/Rscript ${name}
     }
   '';
 }

@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ haskell.compiler.ghc822 ];
   shellHook = ''
     it () {
-      runhaskell ${name}
+      ${haskell.compiler.ghc822}/bin/runhaskell ${name}
     }
   '';
 }

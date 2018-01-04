@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ python36 python36Packages.numpy ];
   shellHook = ''
     it () {
-      python3 ${name}
+      ${python36}/bin/python3 ${name}
     }
   '';
 }
