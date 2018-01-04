@@ -1,5 +1,3 @@
-import $ivy.`org.scala-lang.modules::scala-parser-combinators:1.0.6`
-
 import scala.util.parsing.combinator._
 
 case class WordFreq(word: String, count: Int) {
@@ -14,7 +12,7 @@ class SimpleParser extends RegexParsers {
 
 
 object TestSimpleParser extends SimpleParser {
-  def run(): Unit = {
+  def main(args: Array[String]): Unit = {
     parse(freq, "johnny 121") match {
       case Success(matched,_) => println(matched)
       case Failure(msg,_) => println("FAILURE: " + msg)
@@ -22,6 +20,3 @@ object TestSimpleParser extends SimpleParser {
     }
   }
 }
-
-@main
-def main(): Unit = TestSimpleParser.run
