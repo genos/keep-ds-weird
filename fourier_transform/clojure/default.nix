@@ -10,8 +10,8 @@ let
       sha256 = sha256;
     };
       buildInputs = [ leiningen ];
+      # https://blog.jeaye.com/2017/07/30/nixos-revisited/
       buildPhase = ''
-        # https://blog.jeaye.com/2017/07/30/nixos-revisited/
         export LEIN_HOME=$PWD/.lein
         mkdir -p $LEIN_HOME
         echo "{:user {:local-repo \"$LEIN_HOME\"}}" > $LEIN_HOME/profiles.clj
@@ -40,11 +40,13 @@ let
     };
 in
   stdenv.mkDerivation rec {
-    name = "fourier_transform.clj";
+    name = "fourier-transform.clj";
     buildInputs = [ clojure jdk ];
     shellHook = ''
       it () {
-        ${jdk}/bin/java -cp ${tesser}:${matrix}:${clojure}/share/java/clojure.jar clojure.main ${name}
+        ${jdk}/bin/java \
+          -cp ${tesser}:${matrix}:${clojure}/share/java/clojure.jar \
+          clojure.main ${name}
       }
     '';
   }

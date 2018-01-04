@@ -1,11 +1,11 @@
 {-# LANGUAGE RecordWildCards #-}
--- https://two-wrongs.com/parser-combinators-parsing-for-haskell-beginners
 module Main where
 
 import Control.Monad                (forM_)
 import Data.Char                    (isDigit)
 import Numeric.Natural              (Natural)
 import Text.ParserCombinators.ReadP
+-- https://two-wrongs.com/parser-combinators-parsing-for-haskell-beginners
 
 {- data types and human readable output -}
 
