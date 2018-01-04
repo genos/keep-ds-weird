@@ -37,7 +37,7 @@ in
     buildInputs = [ scala ];
     shellHook = ''
       it () {
-        scala -classpath "${scalaParserCombinators}" ${name}
+        ${scala}/bin/scala -classpath "${scalaParserCombinators}" ${name}
       }
     '';
   }

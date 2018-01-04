@@ -1,14 +1,13 @@
-import scala.util.parsing.combinator._
-
-// helper
-object Pad {
-  def pad(i: Int, len: Int): String = {
-    val s = i.toString
-    "0" * math.max(len - s.length, 0) + s
-  }
-}
+import scala.io.Source
+import scala.util.parsing.combinator.RegexParsers
 
 /* data types */
+
+// output helper
+object Pad {
+  def pad(x: Any, len: Int): String =
+    "0" * math.max(len - x.toString.length, 0) + x.toString
+}
 
 sealed trait SensorID
 case object A extends SensorID
@@ -17,12 +16,12 @@ case object C extends SensorID
 
 case class Date(year: Int, month: Int, day: Int) {
   override def toString(): String =
-    Pad.pad(year, 4) + "-" + Pad.pad(month, 2) + "-" + Pad.pad(day, 2)
+    Seq(Pad.pad(year, 4), Pad.pad(month, 2), Pad.pad(day, 2)).mkString("-")
 }
 
 case class Time(hour: Int, minute: Int, second: Int) {
   override def toString(): String =
-    Pad.pad(hour, 2) + "-" + Pad.pad(minute, 2) + "-" + Pad.pad(second, 2)
+    Seq(Pad.pad(hour, 2), Pad.pad(minute, 2), Pad.pad(second, 2)).mkString(":")
 }
 
 case class Fahrenheit(fahrenheit: Double) extends AnyVal {
@@ -49,37 +48,48 @@ case class Wind(direction: Direction, speed: MilesPerHour) {
 
 case class Entry(
   sensorID: SensorID,
-  date: Date,
-  time: Option[Time],
-  temp: Fahrenheit,
+  date:     Date,
+  time:     Option[Time],
+  temp:     Fahrenheit,
   humidity: Percentage,
-  wind: Option[Wind]
+  wind:     Option[Wind]
 )
 
 /* parsing */
 
-// TODO
-
-case class WordFreq(word: String, count: Int) {
-  override def toString = "Word<" + word + "> " + "occurs with frequency " + count
-}
-
-class SimpleParser extends RegexParsers {
-  def word: Parser[String]   = """[a-z]+""".r       ^^ { _.toString }
-  def number: Parser[Int]    = """(0|[1-9]\d*)""".r ^^ { _.toInt }
-  def freq: Parser[WordFreq] = word ~ number        ^^ { case wd ~ fr => WordFreq(wd, fr) }
+trait Parsers extends RegexParsers {
+  def sensorID: Parser[SensorID] =
+    ("A" ^^^ A) | ("B" ^^^ B) | ("C" ^^^ C)
+  def date: Parser[Date] =
+    """\d{4}""".r ~ "-" ~ """\d{2}""".r ~ "-" ~ """\d{2}""".r ^^ {
+      case y ~ _ ~ m ~ _ ~ d => Date(y.toInt, m.toInt, d.toInt)
+    }
+  def time: Parser[Time] =
+    """\d{2}""".r ~ ":" ~ """\d{2}""".r ~ ":" ~ """\d{2}""".r ^^ {
+      case h ~ _ ~ m ~ _ ~ s => Time(h.toInt, m.toInt, s.toInt)
+    }
+  def temp: Parser[Fahrenheit] =
+    """\d+[.]\d+""".r ^^ { s => Fahrenheit(s.toDouble) }
+  def humidity: Parser[Percentage] =
+    """\d+""".r ~ "%" ^^ { case p ~ _ => Percentage(p.toDouble) }
+  def direction: Parser[Direction] =
+    ("N" ^^^ N) | ("S" ^^^ S) | ("E" ^^^ E) | ("W" ^^^ W)
+  def speed: Parser[MilesPerHour] =
+    """\d+""".r ^^ { m => MilesPerHour(m.toInt) }
+  def wind: Parser[Wind] =
+    direction ~ speed ^^ { case d ~ s => Wind(d, s) }
+  def entry: Parser[Entry] =
+    sensorID ~ date ~ time.? ~ temp ~ humidity ~ wind.? ^^ {
+      case s ~ d ~ tm ~ tp ~ h ~ w => Entry(s, d, tm, tp, h, w)
+    }
 }
 
 /* main event */
 
-// TODO
-
-object TestSimpleParser extends SimpleParser {
+object Test extends Parsers {
   def main(args: Array[String]): Unit = {
-    parse(freq, "johnny 121") match {
-      case Success(matched,_) => println(matched)
-      case Failure(msg,_) => println("FAILURE: " + msg)
-      case Error(msg,_) => println("ERROR: " + msg)
+    Source.fromFile("../data.log").getLines foreach { line =>
+      println(parse(entry, line))
     }
   }
 }
