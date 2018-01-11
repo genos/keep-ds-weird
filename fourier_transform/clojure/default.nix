@@ -1,6 +1,6 @@
-with import ../../common.nix;
-with pkgs;
+with import <nixpkgs> {};
 let
+  leinFromGitHub = (import ../../helpers.nix).makeLeinFromGitHub(pkgs);
   tesser = leinFromGitHub {
     name = "tesser";
     owner = "aphyr";

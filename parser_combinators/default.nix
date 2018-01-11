@@ -1,12 +1,11 @@
-with import ../common.nix;
-with pkgs;
+with import <nixpkgs> {};
 stdenv.mkDerivation rec {
   name = "generate_data.py";
   buildInputs = [ python36 ];
   output = "data.log";
   shellHook = ''
     it () {
-      python3 ${name} > ${output}
+      ${python36}/bin/python3 ${name} > ${output}
     }
   '';
 }

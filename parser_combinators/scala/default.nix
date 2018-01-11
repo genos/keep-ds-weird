@@ -1,6 +1,6 @@
-with import ../../common.nix;
-with pkgs;
+with import <nixpkgs> {};
 let
+  sbtFromGitHub = (import ../../helpers.nix).makeSbtFromGitHub(pkgs);
   scalaParserCombinators = sbtFromGitHub {
     name = "scalaParserCombinators";
     owner = "scala";
