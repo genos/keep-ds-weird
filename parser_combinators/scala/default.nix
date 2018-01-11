@@ -1,30 +1,7 @@
 with import <nixpkgs> {};
+with import ../../common.nix;
 let
-  buildSbtFromGitHub = { name, owner, repo, rev, sha256 } :
-  stdenv.mkDerivation {
-    name = name;
-    src = fetchFromGitHub {
-      owner = owner;
-      repo = repo;
-      rev = rev;
-      sha256 = sha256;
-    };
-    buildInputs = [ sbt scala ];
-    # https://github.com/teozkr/Sbtix/blob/master/plugin/nix-exprs/sbtix.nix
-    SBT_OPTS = ''
-       -Dsbt.ivy.home=./.ivy2/
-       -Dsbt.boot.directory=./.sbt/boot/
-       -Dsbt.global.base=./.sbt
-       -Dsbt.global.staging=./.staging
-    '';
-    buildPhase = ''
-      ${sbt}/bin/sbt package
-    '';
-    installPhase = ''
-      cp target/scala-*/*.jar $out
-    '';
-  };
-  scalaParserCombinators = buildSbtFromGitHub {
+  scalaParserCombinators = sbtFromGitHub {
     name = "scalaParserCombinators";
     owner = "scala";
     repo = "scala-parser-combinators";
