@@ -1,5 +1,5 @@
-with import <nixpkgs> {};
 with import ../../common.nix;
+with pkgs;
 let
   scalaParserCombinators = sbtFromGitHub {
     name = "scalaParserCombinators";

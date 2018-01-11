@@ -1,4 +1,5 @@
-with import <nixpkgs> {};
+with import ./common.nix;
+with pkgs;
 stdenv.mkDerivation rec {
   name = "run_all_the_things";
   shellHook = ''

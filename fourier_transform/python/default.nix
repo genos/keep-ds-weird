@@ -1,4 +1,5 @@
-with import <nixpkgs> {};
+with import ../../common.nix;
+with pkgs;
 stdenv.mkDerivation rec {
   name = "fourier_transform.py";
   buildInputs = [ python36 python36Packages.numpy ];

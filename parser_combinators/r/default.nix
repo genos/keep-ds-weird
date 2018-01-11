@@ -1,4 +1,5 @@
-with import <nixpkgs> {};
+with import ../../common.nix;
+with pkgs;
 stdenv.mkDerivation rec {
   name = "parseLog.R";
   buildInputs = [ R rPackages.Ramble ];

@@ -40,7 +40,7 @@ let
        -Dsbt.global.staging=./.staging
     '';
     buildPhase = ''
-      ${sbt}/bin/sbt package
+      ${pkgs.sbt}/bin/sbt package
     '';
     installPhase = ''
       cp target/scala-*/*.jar $out
@@ -48,6 +48,7 @@ let
   };
 in
   {
+    pkgs = pkgs;
     leinFromGitHub = leinFromGitHub;
     sbtFromGitHub = sbtFromGitHub;
   }
