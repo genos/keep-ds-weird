@@ -1,7 +1,8 @@
 with import <nixpkgs> {};
 let
-  leinFromGitHub = (import ../../helpers.nix).makeLeinFromGitHub(pkgs);
+  leinFromGitHub = (import ../../helpers.nix).leinFromGitHub;
   tesser = leinFromGitHub {
+    pkgs = pkgs;
     name = "tesser";
     owner = "aphyr";
     repo = "tesser";
@@ -10,6 +11,7 @@ let
     cd = "core";
   };
   matrix = leinFromGitHub {
+    pkgs = pkgs;
     name = "matrix";
     owner = "mikera";
     repo = "core.matrix";

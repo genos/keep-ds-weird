@@ -1,7 +1,8 @@
 with import <nixpkgs> {};
 let
-  sbtFromGitHub = (import ../../helpers.nix).makeSbtFromGitHub(pkgs);
+  sbtFromGitHub = (import ../../helpers.nix).sbtFromGitHub;
   scalaParserCombinators = sbtFromGitHub {
+    pkgs = pkgs;
     name = "scalaParserCombinators";
     owner = "scala";
     repo = "scala-parser-combinators";

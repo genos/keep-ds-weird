@@ -1,5 +1,5 @@
-let
-  makeLeinFromGitHub = pkgs: { name, owner, repo, rev, sha256, cd }:
+{
+  leinFromGitHub =  { pkgs, name, owner, repo, rev, sha256, cd }:
   pkgs.stdenv.mkDerivation {
     name = name;
     src = pkgs.fetchFromGitHub {
@@ -21,7 +21,7 @@ let
         cp target/${repo}*-standalone.jar $out
     '';
   };
-  makeSbtFromGitHub = pkgs: { name, owner, repo, rev, sha256 }:
+  sbtFromGitHub = { pkgs, name, owner, repo, rev, sha256 }:
   pkgs.stdenv.mkDerivation {
     name = name;
     src = pkgs.fetchFromGitHub {
@@ -45,8 +45,4 @@ let
       cp target/scala-*/*.jar $out
     '';
   };
-in
-  {
-    makeLeinFromGitHub = makeLeinFromGitHub;
-    makeSbtFromGitHub  = makeSbtFromGitHub;
-  }
+}
