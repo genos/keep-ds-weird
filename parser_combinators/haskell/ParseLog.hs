@@ -6,6 +6,7 @@ import Data.Char                    (isDigit)
 import Numeric.Natural              (Natural)
 import Text.ParserCombinators.ReadP
 -- https://two-wrongs.com/parser-combinators-parsing-for-haskell-beginners
+-- stick with what's available in std lib
 
 {- data types and human readable output -}
 
@@ -150,4 +151,4 @@ entry = do
 main :: IO ()
 main = do
   rawData <- readFile "../data.log"
-  forM_ (lines rawData) $ \line -> print (head (fst <$> readP_to_S entry line))
+  forM_ (lines rawData) $ \line -> print . head $ fst <$> readP_to_S entry line
