@@ -1,4 +1,4 @@
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE NamedFieldPuns #-}
 module Main where
 
 import Control.Monad                (forM_)
@@ -77,14 +77,14 @@ date = do
   _month <- digits 2
   _      <- char '-'
   _day   <- digits 2
-  return Date {..}
+  return Date { _year, _month, _day }
 
 date' :: ReadP Date
 date' = do
   _year  <- digits 4
   _month <- char '-' *> digits 2
   _day   <- char '-' *> digits 2
-  return Date {..}
+  return Date { _year, _month, _day}
 
 date'' :: ReadP Date
 date'' =
@@ -95,7 +95,7 @@ time = do
   _hour   <- digits 2
   _minute <- char ':' *> digits 2
   _second <- char ':' *> digits 2
-  return Time {..}
+  return Time { _hour, _minute, _second }
 
 fahrenheit :: ReadP Fahrenheit
 fahrenheit = do
@@ -129,7 +129,7 @@ wind :: ReadP Wind
 wind = do
   _direction <- direction
   _speed     <- skipSpaces *> speed
-  return Wind {..}
+  return Wind { _direction, _speed }
 
 wind' :: ReadP Wind
 wind' = Wind <$> direction <*> (skipSpaces *> speed')
@@ -144,7 +144,7 @@ entry = do
   _temp     <- skipSpaces *> fahrenheit
   _humidity <- skipSpaces *> humidity
   _wind     <- skipSpaces *> (Just <$> wind) <++ pure Nothing
-  return Entry {..}
+  return Entry { _sensorID, _date, _time, _temp, _humidity, _wind }
 
 {- main event -}
 
