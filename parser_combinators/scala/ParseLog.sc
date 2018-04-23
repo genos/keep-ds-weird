@@ -5,7 +5,7 @@ import scala.util.parsing.combinator.RegexParsers
 
 // output helper
 object Pad {
-  def pad(x: Any, len: Int): String =
+  def apply(x: Any, len: Int): String =
     "0" * math.max(len - x.toString.length, 0) + x.toString
 }
 
@@ -16,12 +16,12 @@ case object C extends SensorID
 
 case class Date(year: Int, month: Int, day: Int) {
   override def toString(): String =
-    Seq(Pad.pad(year, 4), Pad.pad(month, 2), Pad.pad(day, 2)).mkString("-")
+    Seq(Pad(year, 4), Pad(month, 2), Pad(day, 2)).mkString("-")
 }
 
 case class Time(hour: Int, minute: Int, second: Int) {
   override def toString(): String =
-    Seq(Pad.pad(hour, 2), Pad.pad(minute, 2), Pad.pad(second, 2)).mkString(":")
+    Seq(Pad(hour, 2), Pad(minute, 2), Pad(second, 2)).mkString(":")
 }
 
 case class Fahrenheit(fahrenheit: Double) extends AnyVal {
