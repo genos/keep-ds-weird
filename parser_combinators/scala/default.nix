@@ -1,6 +1,6 @@
 with import <nixpkgs> {};
 let
-  sbtFromGitHub = (import ../../helpers.nix).sbtFromGitHub;
+  inherit (import ../../helpers.nix) sbtFromGitHub;
   scalaParserCombinators = sbtFromGitHub {
     pkgs = pkgs;
     name = "scalaParserCombinators";
@@ -10,7 +10,7 @@ let
     sha256 = "1mjy1q96kc16dp3f6088l86aw6kl162dww2brq0ymszxd6j674s0";
   };
 in
-  stdenv.mkDerivation rec {
+  pkgs.stdenv.mkDerivation rec {
     name = "ParseLog.sc";
     buildInputs = [ scala ];
     shellHook = ''

@@ -1,5 +1,5 @@
 with import <nixpkgs> {};
-stdenv.mkDerivation rec {
+pkgs.stdenv.mkDerivation rec {
   name = "run_all_the_things";
   shellHook = ''
     it () {

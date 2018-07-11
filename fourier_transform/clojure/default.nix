@@ -1,6 +1,6 @@
 with import <nixpkgs> {};
 let
-  leinFromGitHub = (import ../../helpers.nix).leinFromGitHub;
+  inherit (import ../../helpers.nix) leinFromGitHub;
   tesser = leinFromGitHub {
     pkgs = pkgs;
     name = "tesser";
@@ -20,7 +20,7 @@ let
     cd = ".";
     };
 in
-  stdenv.mkDerivation rec {
+  pkgs.stdenv.mkDerivation rec {
     name = "fourier-transform.clj";
     buildInputs = [ clojure jdk ];
     shellHook = ''
