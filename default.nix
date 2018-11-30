@@ -6,7 +6,7 @@ pkgs.stdenv.mkDerivation rec {
       for f in $(find . -mindepth 2 -name default.nix -print | sort); do
         echo $f
         cd $(dirname $f)
-        nix-shell --run it
+        nix-shell --pure --run it
         cd - > /dev/null
       done
     }
