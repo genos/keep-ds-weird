@@ -1,8 +1,8 @@
 {-# LANGUAGE NamedFieldPuns #-}
 module Main where
 
-import Control.Monad                (forM_)
 import Data.Char                    (isDigit)
+import Data.Foldable                (for_)
 import Numeric.Natural              (Natural)
 import Text.ParserCombinators.ReadP
 -- https://two-wrongs.com/parser-combinators-parsing-for-haskell-beginners
@@ -146,9 +146,13 @@ entry = do
   _wind     <- skipSpaces *> (Just <$> wind) <++ pure Nothing
   return Entry { _sensorID, _date, _time, _temp, _humidity, _wind }
 
+-- run our parser
+parseEntry :: String -> Entry
+parseEntry = fst . head . readP_to_S entry
+
 {- main event -}
 
 main :: IO ()
 main = do
   rawData <- readFile "../data.log"
-  forM_ (lines rawData) $ \line -> print . head $ fst <$> readP_to_S entry line
+  for_ (lines rawData) $ \line -> print $ parseEntry line

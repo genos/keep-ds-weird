@@ -1,12 +1,11 @@
 module Main where
 -- With help from http://r6.ca/blog/20110808T035622Z.html
 
-import Control.Applicative
-import Data.Foldable
+import Control.Applicative (ZipList (..))
+import Data.Foldable       (foldl')
 
-data MinPlus = Inf
-             | MP {-# UNPACK #-} !Double
-             deriving (Eq, Ord)
+data MinPlus = Inf | MP Double
+  deriving (Eq, Ord)
 
 instance Show MinPlus where
     show (MP x) = show x
