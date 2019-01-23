@@ -1,8 +1,6 @@
-with import <nixpkgs> {};
 let
-  inherit (import ../../helpers.nix) leinFromGitHub;
+  inherit (import ../../helpers.nix) pkgs leinFromGitHub;
   tesser = leinFromGitHub {
-    pkgs = pkgs;
     name = "tesser";
     owner = "aphyr";
     repo = "tesser";
@@ -11,7 +9,6 @@ let
     cd = "core";
   };
   matrix = leinFromGitHub {
-    pkgs = pkgs;
     name = "matrix";
     owner = "mikera";
     repo = "core.matrix";
@@ -22,11 +19,11 @@ let
 in
   pkgs.stdenv.mkDerivation rec {
     name = "fourier-transform.clj";
-    buildInputs = [ clojure jdk ];
+    buildInputs = [ pkgs.clojure pkgs.jdk ];
     shellHook = ''
       it () {
-        ${jdk}/bin/java \
-          -cp ${tesser}:${matrix}:${clojure}/share/java/clojure.jar \
+        ${pkgs.jdk}/bin/java \
+          -cp ${tesser}:${matrix}:${pkgs.clojure}/share/java/clojure.jar \
           clojure.main ${name}
       }
     '';

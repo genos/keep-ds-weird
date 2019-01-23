@@ -1,8 +1,6 @@
-with import <nixpkgs> {};
 let
-  inherit (import ../../helpers.nix) sbtFromGitHub;
+  inherit (import ../../helpers.nix) pkgs sbtFromGitHub;
   scalaParserCombinators = sbtFromGitHub {
-    pkgs = pkgs;
     name = "scalaParserCombinators";
     owner = "scala";
     repo = "scala-parser-combinators";
@@ -12,10 +10,10 @@ let
 in
   pkgs.stdenv.mkDerivation rec {
     name = "ParseLog.sc";
-    buildInputs = [ scala ];
+    buildInputs = [ pkgs.scala ];
     shellHook = ''
       it () {
-        ${scala}/bin/scala -classpath "${scalaParserCombinators}" ${name}
+        ${pkgs.scala}/bin/scala -classpath "${scalaParserCombinators}" ${name}
       }
     '';
   }

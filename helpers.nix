@@ -1,5 +1,8 @@
+let
+  pkgs = import ( fetchTarball https://github.com/NixOS/nixpkgs/archive/18.09.tar.gz ) {};
+in
 {
-  leinFromGitHub =  { pkgs, name, owner, repo, rev, sha256, cd }:
+  leinFromGitHub = { name, owner, repo, rev, sha256, cd }:
   pkgs.stdenv.mkDerivation {
     name = name;
     src = pkgs.fetchFromGitHub {
@@ -21,7 +24,7 @@
         cp target/${repo}*-standalone.jar $out
     '';
   };
-  sbtFromGitHub = { pkgs, name, owner, repo, rev, sha256 }:
+  sbtFromGitHub = { name, owner, repo, rev, sha256 }:
   pkgs.stdenv.mkDerivation {
     name = name;
     src = pkgs.fetchFromGitHub {
@@ -45,4 +48,5 @@
       cp target/scala-*/*.jar $out
     '';
   };
+  pkgs = pkgs;
 }

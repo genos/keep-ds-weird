@@ -1,10 +1,12 @@
-with import <nixpkgs> {};
-pkgs.stdenv.mkDerivation rec {
-  name = "MinPlus.hs";
-  buildInputs = [ haskell.compiler.ghc863 ];
-  shellHook = ''
-    it () {
-      ${haskell.compiler.ghc863}/bin/runhaskell ${name}
-    }
-  '';
-}
+let
+  inherit (import ../helpers.nix) pkgs;
+in
+  pkgs.stdenv.mkDerivation rec {
+    name = "MinPlus.hs";
+    buildInputs = [ pkgs.ghc ];
+    shellHook = ''
+      it () {
+        ${pkgs.ghc}/bin/runhaskell ${name}
+      }
+    '';
+  }
