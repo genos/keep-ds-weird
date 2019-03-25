@@ -4,16 +4,16 @@ let
     name = "tesser";
     owner = "aphyr";
     repo = "tesser";
-    rev = "b7b67dfaf25f1764c70c90dc6681dd333d24d6a4";
-    sha256 = "1vma6ram4qs7llnfn84d4xvpn0q7kmzmkmsjpnkpqnryff9w2gvr";
+    rev = "f3b92c56fa47d02bd57ed816289dcc6250814173"; # release 1.0.3
+    sha256 = "1b1zx09b0q7k0fgcv7g9ryfl90d91bamis3lcbwhr9x2bk47bjz5";
     cd = "core";
   };
   matrix = leinFromGitHub {
     name = "matrix";
     owner = "mikera";
     repo = "core.matrix";
-    rev = "f864c29d4e85d35de018295a87a295fc3df632a6";
-    sha256 = "1dywj2av5rwnv7qhh09lpx9c2kx7wvgllwyssvyr75cb6fa6smvg";
+    rev = "b69ff31bf1da73a7210f7f9c6f6dd62f325f7d16"; # release 0.62.0
+    sha256 = "0033704l7h4hgnjhncwkv79nfph60cshm1nvbmk5qx6dml3wfzl3";
     cd = ".";
     };
 in

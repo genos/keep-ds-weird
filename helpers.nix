@@ -1,5 +1,7 @@
 let
-  pkgs = import ( fetchTarball https://github.com/NixOS/nixpkgs/archive/18.09.tar.gz ) {};
+  pkgs = import (
+    fetchTarball https://github.com/NixOS/nixpkgs/archive/18.09.tar.gz
+  ) {};
 in
 {
   leinFromGitHub = { name, owner, repo, rev, sha256, cd }:
