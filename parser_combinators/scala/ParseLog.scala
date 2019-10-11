@@ -1,5 +1,5 @@
 import scala.io.Source
-import scala.util.parsing.combinator.RegexParsers
+import $ivy.`org.scala-lang.modules::scala-parser-combinators:1.1.2`, scala.util.parsing.combinator.RegexParsers
 
 /* data types */
 
@@ -57,7 +57,7 @@ case class Entry(
 
 /* parsing */
 
-trait Parsers extends RegexParsers {
+class Parser extends RegexParsers {
   def sensorID: Parser[SensorID] =
     ("A" ^^^ A) | ("B" ^^^ B) | ("C" ^^^ C)
   def date: Parser[Date] =
@@ -86,10 +86,10 @@ trait Parsers extends RegexParsers {
 
 /* main event */
 
-object Test extends Parsers {
-  def main(args: Array[String]): Unit = {
-    Source.fromFile("../data.log").getLines foreach { line =>
-      println(parse(entry, line))
-    }
+@main
+def main() = {
+  val p = new Parser
+  Source.fromFile("../data.log").getLines foreach { line =>
+    println(p.parse(p.entry, line))
   }
 }
