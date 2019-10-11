@@ -1,6 +1,6 @@
 let
   pkgs = import
-    (fetchTarball "https://github.com/NixOS/nixpkgs/archive/18.09.tar.gz") { };
+    (fetchTarball "https://github.com/NixOS/nixpkgs/archive/19.09.tar.gz") { };
 in {
   leinFromGitHub = { name, owner, repo, rev, sha256, cd }:
     pkgs.stdenv.mkDerivation {
@@ -22,30 +22,6 @@ in {
       '';
       installPhase = ''
         cp target/${repo}*-standalone.jar $out
-      '';
-    };
-  sbtFromGitHub = { name, owner, repo, rev, sha256 }:
-    pkgs.stdenv.mkDerivation {
-      name = name;
-      src = pkgs.fetchFromGitHub {
-        owner = owner;
-        repo = repo;
-        rev = rev;
-        sha256 = sha256;
-      };
-      buildInputs = [ pkgs.sbt ];
-      # https://github.com/teozkr/Sbtix/blob/master/plugin/nix-exprs/sbtix.nix
-      SBT_OPTS = ''
-        -Dsbt.ivy.home=./.ivy2/
-        -Dsbt.boot.directory=./.sbt/boot/
-        -Dsbt.global.base=./.sbt
-        -Dsbt.global.staging=./.staging
-      '';
-      buildPhase = ''
-        ${pkgs.sbt}/bin/sbt package
-      '';
-      installPhase = ''
-        cp target/scala-*/*.jar $out
       '';
     };
   pkgs = pkgs;
