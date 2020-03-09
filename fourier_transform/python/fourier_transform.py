@@ -18,7 +18,7 @@ def fourier_transform_2(ps):
     return sum(map(rho, ps))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     np.random.seed(1729)
     k = 5
     n = 500
