@@ -39,4 +39,4 @@ def entry(date):
 if __name__ == '__main__':
     r.seed(1729)
     for i in range(10):
-        print(entry(date=dt.date(2018, 1, 1) + dt.timedelta(i)))
+        print(entry(date=dt.date(2020, 1, 1) + dt.timedelta(i)))
