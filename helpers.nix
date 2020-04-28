@@ -1,6 +1,6 @@
 let
   pkgs = import
-    (fetchTarball "https://github.com/NixOS/nixpkgs/archive/19.09.tar.gz") { };
+    (fetchTarball "https://github.com/NixOS/nixpkgs/archive/20.03.tar.gz") { };
 in {
   leinFromGitHub = { name, owner, repo, rev, sha256, cd }:
     pkgs.stdenv.mkDerivation {
