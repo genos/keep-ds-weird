@@ -58,8 +58,9 @@ entry <- (
 
 entries <- function(raw) {
   data <- t(sapply(raw, function(row) entry(row)$result))
-  df <- as.data.frame(data, row.names = NA)
-  names(df) <- c("sensorID", "date", "time", "temp_F", "humidity_%", "wind")
+  df <- as.data.frame(data)
+  colnames(df) <- c("sensorID", "date", "time", "temp_F", "humidity_%", "wind")
+  rownames(df) <- NULL
   df[df == "NULL"] <- NA
   df
 }
