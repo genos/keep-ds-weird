@@ -8,8 +8,8 @@ data MinPlus = Inf | MP Double
   deriving (Eq, Ord)
 
 instance Show MinPlus where
-    show (MP x) = show x
-    show Inf    = "∞"
+  show (MP x) = show x
+  show Inf    = "∞"
 
 zero, one :: MinPlus
 zero = Inf
@@ -29,12 +29,12 @@ _      .*. Inf    = Inf
 (MP x) .*. (MP y) = MP (x + y)
 
 instance Num MinPlus where
-    (+)         = (.+.)
-    (*)         = (.*.)
-    fromInteger = MP . fromInteger
-    abs         = undefined
-    signum      = undefined
-    negate      = undefined
+  (+)         = (.+.)
+  (*)         = (.*.)
+  fromInteger = MP . fromInteger
+  abs         = undefined
+  signum      = undefined
+  negate      = undefined
 
 dotList :: [MinPlus] -> [MinPlus] -> MinPlus
 xs `dotList` ys = foldl' (.+.) zero $ zipWith (.*.) xs ys
@@ -46,8 +46,7 @@ main :: IO ()
 main = do
   print $ 3 .*. 4 .+. 5
   print $ MP 3 * 4 + 5
-  let (x, y, u, v) =
-        ([Inf, 8, 6, 7, 5, 3, 0, 9], reverse x, ZipList x, ZipList y)
+  let (x, y, u, v) = ([Inf, 8, 6, 7, 5, 3, 0, 9], reverse x, ZipList x, ZipList y)
   print x
   print $ x `dotList` y
   print $ u `dot` v
