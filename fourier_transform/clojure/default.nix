@@ -26,16 +26,16 @@ let
     name = "tesser";
     owner = "aphyr";
     repo = "tesser";
-    rev = "f3b92c56fa47d02bd57ed816289dcc6250814173"; # release 1.0.3
-    sha256 = "1b1zx09b0q7k0fgcv7g9ryfl90d91bamis3lcbwhr9x2bk47bjz5";
+    rev = "d82895390264d8f6bf012fa4053a2003a500b574"; # release 1.0.4
+    sha256 = "0k2shy6ccig00lc9y6y8lyh7bnd250xxp5nh8fz254f2kq8ib4mn";
     cd = "core";
   };
   matrix = leinFromGitHub {
     name = "matrix";
     owner = "mikera";
     repo = "core.matrix";
-    rev = "b69ff31bf1da73a7210f7f9c6f6dd62f325f7d16"; # release 0.62.0
-    sha256 = "0033704l7h4hgnjhncwkv79nfph60cshm1nvbmk5qx6dml3wfzl3";
+    rev = "07cb88b1b43ccc07f3f7e8634e1eccdb6986049b"; # develop branch as of 2021-11-19
+    sha256 = "1dn5hy5mdgl2bcmav8qll3qxqbscb340c462kkj728sfpk4ch5xd";
   };
 in pkgs.stdenv.mkDerivation rec {
   name = "fourier-transform.clj";

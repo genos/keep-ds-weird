@@ -3,27 +3,29 @@
 """Generate fake weather data for parser combinbator examples"""
 
 import datetime as dt
-import random as r
+import random
 
 
 def space():
     """A random amount of whitespace (tabs and spaces)"""
-    return "".join([r.choice(" \t") for _ in range(r.randrange(1, 4))])
+    return "".join([random.choice(" \t") for _ in range(random.randrange(1, 4))])
 
 
 def entry(date):
     """Fake weather entry for parser combinator examples"""
-    sensor_id = r.choice("ABC")
+    sensor_id = random.choice("ABC")
     time = None
-    if r.choice([True, False]):
-        time = dt.time(r.randrange(0, 24), r.randrange(0, 60), r.randrange(0, 60))
-    temperature = r.normalvariate(75, 10)
-    humidity = r.random()
+    if random.choice([True, False]):
+        time = dt.time(
+            random.randrange(0, 24), random.randrange(0, 60), random.randrange(0, 60)
+        )
+    temperature = random.normalvariate(75, 10)
+    humidity = random.random()
     direction = None
     speed = None
-    if r.choice([True, False]):
-        direction = r.choice("NSEW")
-        speed = r.randrange(15)
+    if random.choice([True, False]):
+        direction = random.choice("NSEW")
+        speed = random.randrange(15)
     return "".join(
         [
             sensor_id,
@@ -43,6 +45,6 @@ def entry(date):
 
 
 if __name__ == "__main__":
-    r.seed(1729)
+    random.seed(1729)
     for i in range(10):
         print(entry(date=dt.date(2020, 1, 1) + dt.timedelta(i)))
