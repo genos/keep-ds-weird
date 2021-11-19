@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import numpy as np
 import timeit
+
+import numpy as np
 
 
 def naive(X):
@@ -34,7 +35,7 @@ def check_equality(X):
     no_loops_answer = no_loops(X)
     print(
         "Does the no loops answer match the naive answer?\n\t{}".format(
-            "Yes" if np.all(no_loops_answer == naive_answer) else "No"
+            "Yes" if np.allclose(no_loops_answer, naive_answer) else "No"
         )
     )
 
