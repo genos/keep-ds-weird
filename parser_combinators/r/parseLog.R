@@ -1,4 +1,4 @@
-library('Ramble')
+library(Ramble)
 
 p <- function(result, collapse='') paste0(result, collapse=collapse)
 

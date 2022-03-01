@@ -1,5 +1,5 @@
 import scala.io.Source
-import $ivy.`org.scala-lang.modules::scala-parser-combinators:1.1.2`, scala.util.parsing.combinator.RegexParsers
+import $ivy.`org.scala-lang.modules::scala-parser-combinators:2.1.1`, scala.util.parsing.combinator.RegexParsers
 
 /* data types */
 

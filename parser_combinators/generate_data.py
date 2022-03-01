@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# coding: utf-8
 """Generate fake weather data for parser combinbator examples"""
 
 import datetime as dt
