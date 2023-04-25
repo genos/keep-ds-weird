@@ -15,10 +15,6 @@
       pkgs = import nixpkgs {inherit system;};
     in {
       formatter = pkgs.alejandra;
-      apps.${system}.default = {
-        type = "app";
-        program = "${self}.packages/bin/run";
-      };
       packages.default = pkgs.writeScriptBin "run" ''
         for f in $(fd flake.nix */); do
           echo $f | lolcat
