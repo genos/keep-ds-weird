@@ -1,6 +1,13 @@
 let
   inherit (import ../../pkgs.nix) pkgs;
-  leinFromGitHub = { name, owner, repo, rev, sha256, cd ? "." }:
+  leinFromGitHub = {
+    name,
+    owner,
+    repo,
+    rev,
+    sha256,
+    cd ? ".",
+  }:
     pkgs.stdenv.mkDerivation {
       name = name;
       src = pkgs.fetchFromGitHub {
@@ -9,7 +16,7 @@ let
         rev = rev;
         sha256 = sha256;
       };
-      buildInputs = [ pkgs.leiningen ];
+      buildInputs = [pkgs.leiningen];
       # https://blog.jeaye.com/2017/07/30/nixos-revisited/
       buildPhase = ''
         export LEIN_HOME=$PWD/.lein
@@ -37,12 +44,13 @@ let
     rev = "07cb88b1b43ccc07f3f7e8634e1eccdb6986049b"; # develop branch as of 2021-11-19
     sha256 = "1dn5hy5mdgl2bcmav8qll3qxqbscb340c462kkj728sfpk4ch5xd";
   };
-in pkgs.stdenv.mkDerivation rec {
-  name = "fourier-transform.clj";
-  buildInputs = [ pkgs.clojure pkgs.jdk ];
-  shellHook = ''
-    it () {
-      java -cp ${tesser}:${matrix} clojure.main ${name}
-    }
-  '';
-}
+in
+  pkgs.stdenv.mkDerivation rec {
+    name = "fourier-transform.clj";
+    buildInputs = [pkgs.clojure pkgs.jdk];
+    shellHook = ''
+      it () {
+        java -cp ${tesser}:${matrix} clojure.main ${name}
+      }
+    '';
+  }
