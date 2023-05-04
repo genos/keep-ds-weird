@@ -1,5 +1,5 @@
 {
-  description = "Fourier Transform in Python";
+  description = "Fourier Transform in Clojure";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
